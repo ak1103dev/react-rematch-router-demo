@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux'
 import './App.css';
 
-function App() {
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>cart {props.xxx}</div>
+      The count is {props.count}
+      <button onClick={props.increment}>increment</button>
+      <button onClick={props.incrementAsync}>incrementAsync</button>
     </div>
   );
 }
 
-export default App;
+const mapState = state => ({
+  count: state.count.count,
+  xxx: state.cart
+})
+
+const mapDispatch = ({ count: { increment, incrementAsync }}) => ({
+  increment: () => increment(2),
+  incrementAsync: () => incrementAsync(1)
+})
+
+export default connect(mapState, mapDispatch)(App);
